@@ -39,10 +39,8 @@ function createMainWindow() {
 
   mainWindow.loadFile(path.join(__dirname, '../ui/index.html'));
 
-  // Prevent DevTools from opening in production
-  mainWindow.webContents.on('devtools-opened', () => {
-    mainWindow.webContents.closeDevTools();
-  });
+  // Always open DevTools in development mode
+  mainWindow.webContents.openDevTools();
 
   // Show main window once ready and close splash
   mainWindow.once('ready-to-show', () => {
@@ -157,10 +155,36 @@ ipcMain.handle('vault:show-about', async () => {
   });
 });
 
-app.whenReady().then(() => {
+ipcMain.handle('vault:toggle-devtools', () => {
+  const win = BrowserWindow.getFocusedWindow();
+  if (win) {
+    win.webContents.toggleDevTools();
+  }
+  return { success: true };
+});
+
+app.whenReady().then(async () => {
   createSplash();
   createMainWindow();
   buildMenu();
+
+  const chokidar = (await import('chokidar')).default;
+
+  // Hot reload watcher for tools during development
+  const toolsPath = path.join(__dirname, '../tools');
+
+  const watcher = chokidar.watch(toolsPath, {
+    ignored: /(^|[\/\\])\../,
+    persistent: true
+  });
+
+  watcher.on('change', (filePath) => {
+    const win = BrowserWindow.getAllWindows()[0];
+
+    if (win) {
+      win.webContents.send('vault:tool-updated', filePath);
+    }
+  });
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

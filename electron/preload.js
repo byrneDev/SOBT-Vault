@@ -12,6 +12,7 @@ contextBridge.exposeInMainWorld("vault", {
   clearUploads: () => ipcRenderer.invoke('vault:clear-uploads'),
   getVersion: () => ipcRenderer.invoke('vault:get-version'),
   showAbout: () => ipcRenderer.invoke('vault:show-about'),
+  toggleDevTools: () => ipcRenderer.invoke('vault:toggle-devtools'),
 
   // Event subscription helper
   on: (channel, callback) => {

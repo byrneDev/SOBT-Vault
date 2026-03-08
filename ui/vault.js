@@ -145,15 +145,85 @@ window.addEventListener("DOMContentLoaded", async () => {
   const settingsBtn = document.getElementById("settingsBtn");
   const helpBtn = document.getElementById("helpBtn");
 
-  if (settingsBtn) {
+  const settingsPanel = document.getElementById("settingsPanel");
+  const closeSettingsBtn = document.getElementById("closeSettingsBtn");
+  const toggleDevBtn = document.getElementById("toggleDevToolsBtn");
+
+  if (settingsBtn && settingsPanel) {
     settingsBtn.addEventListener("click", () => {
-      alert("Settings panel coming soon.");
+      settingsPanel.style.display = "block";
+    });
+  }
+
+  if (closeSettingsBtn && settingsPanel) {
+    closeSettingsBtn.addEventListener("click", () => {
+      settingsPanel.style.display = "none";
+    });
+  }
+
+  if (toggleDevBtn) {
+    toggleDevBtn.addEventListener("click", async () => {
+      try {
+        const bridge =
+          window.api ||
+          window.vault ||
+          (window.parent && window.parent.vault) ||
+          null;
+
+        if (bridge && bridge.toggleDevTools) {
+          await bridge.toggleDevTools();
+        } else {
+          console.warn("DevTools bridge not available");
+        }
+      } catch (err) {
+        console.error("DevTools toggle failed", err);
+      }
     });
   }
 
   if (helpBtn) {
     helpBtn.addEventListener("click", () => {
       alert("Vault platform help coming soon.");
+    });
+  }
+
+  // Hot reload listener for tool changes
+  const bridge =
+    window.api ||
+    window.vault ||
+    (window.parent && window.parent.vault) ||
+    null;
+
+  if (bridge && bridge.on) {
+    bridge.on("vault:tool-updated", (filePath) => {
+      const frame = document.querySelector(".vault-frame");
+
+      // Write reload indicator to the log panel if it exists
+      const logPanel = document.getElementById("logOutput");
+      if (logPanel) {
+        const ts = new Date().toLocaleTimeString();
+        logPanel.textContent += `[${ts}] Tool updated — reloading (${filePath || 'tool'})\n`;
+        logPanel.scrollTop = logPanel.scrollHeight;
+      }
+
+      console.log("Tool updated — reloading", filePath);
+
+      // Show visual reload banner
+      const banner = document.getElementById("reloadBanner");
+      if (banner) {
+        banner.style.display = "block";
+
+        // hide banner after short delay
+        setTimeout(() => {
+          banner.style.display = "none";
+        }, 1200);
+      }
+
+      if (frame && frame.src) {
+        const currentSrc = frame.src;
+        frame.src = "";
+        frame.src = currentSrc;
+      }
     });
   }
 });

@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', () => {
 const form = document.getElementById('buildForm');
 const selectZipBtn = document.getElementById('selectZipBtn');
 const selectedZipName = document.getElementById('selectedZipName');
@@ -137,3 +138,4 @@ if (aboutBtn) {
         alert('VaultSCO Builder\n\nBuild CourseVault-ready SOBT SCO packages.\n\nPart of the SOBT ICW Developer Tools suite.');
     });
 }
+});

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SOBT Exam Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+<header>
+
+    <div class="header-row">
+
+        <div class="brand">
+            <img src="logo.png" alt="SOBT Developer Tool Logo" class="brand-logo">
+
+            <div class="brand-text">
+                <h1>SOBT Exam Generator</h1>
+                <p class="subtitle">Generate SOBT-Compliant Exam Banks</p>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <div class="file-row">
+                <button id="importBankBtn" class="secondary-btn">Select Bank</button>
+                <span id="importBankName" class="file-name">No bank selected</span>
+                <input type="file" id="importBankFile" accept=".js,.json" style="display:none">
+            </div>
+
+            <div class="file-row">
+                <button id="importExcelBtn" class="secondary-btn">Import Excel</button>
+                <span id="importExcelName" class="file-name">No file selected</span>
+                <input type="file" id="importExcelFile" accept=".xlsx,.xls" style="display:none">
+            </div>
+
+            <button id="aboutBtn" class="secondary-btn">About</button>
+        </div>
+
+    </div>
+
+</header>
+
+
+
+
+<!-- MANUAL QUESTION ENTRY -->
+
+<section class="panel">
+
+<h3>Manual Question Entry</h3>
+
+<div class="form-grid">
+
+  <div class="form-row">
+    <label>Question ID</label>
+    <input type="text" id="questionID" class="form-input">
+  </div>
+
+  <div class="form-row">
+    <label>Question Type</label>
+    <select id="questionType" class="form-input">
+      <option value="MC">Multiple Choice</option>
+      <option value="MA">Multiple Answer</option>
+    </select>
+  </div>
+
+</div>
+
+<div class="form-row">
+<label>Question</label>
+<textarea id="questionText" class="form-input"></textarea>
+</div>
+
+<div class="choices-grid">
+
+  <div class="form-row">
+    <label>Choice A</label>
+    <input type="text" id="choiceA" class="form-input">
+  </div>
+
+  <div class="form-row">
+    <label>Choice B</label>
+    <input type="text" id="choiceB" class="form-input">
+  </div>
+
+  <div class="form-row">
+    <label>Choice C</label>
+    <input type="text" id="choiceC" class="form-input">
+  </div>
+
+  <div class="form-row">
+    <label>Choice D</label>
+    <input type="text" id="choiceD" class="form-input">
+  </div>
+
+</div>
+
+<div class="form-row">
+<label>Correct Answer</label>
+<input type="text" id="correctAnswer" placeholder="A or A,B" class="form-input">
+</div>
+
+<div class="form-row">
+<label>Remediation</label>
+<textarea id="remediation" class="form-input"></textarea>
+</div>
+
+<div class="action-row">
+  <button id="addQuestionBtn" class="primary-btn">Add Question</button>
+</div>
+
+</section>
+
+
+<!-- QUESTION BANK -->
+
+<section class="panel">
+
+<h3>Question Bank</h3>
+
+<div id="questionList" class="question-list"></div>
+
+</section>
+
+
+<!-- EXPORT -->
+
+<section class="panel">
+
+<h3>Export</h3>
+
+<button id="exportExamBtn" class="primary-btn">
+Export SOBT Exam Bank
+</button>
+
+</section>
+
+
+<!-- STATUS + LOG -->
+
+<section class="panel status-panel">
+
+<h3>Tool Log</h3>
+
+<div class="log-container">
+<pre id="logOutput"></pre>
+</div>
+
+</section>
+
+
+</div>
+
+<script src="lib/xlsx.full.min.js"></script>
+<script type="module" src="app.js"></script>
+
+</body>
+</html>

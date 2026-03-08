@@ -6,6 +6,13 @@
       "entry": "../tools/sco-builder/index.html",
       "icon": "",
       "category": "Builder"
+    },
+    {
+      "name": "VaultExam Generator",
+      "description": "Generate structured exams and export question banks",
+      "entry": "../tools/exam-generator/index.html",
+      "icon": "",
+      "category": "Assessment"
     }
   ]
 }
