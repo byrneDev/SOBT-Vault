@@ -1,0 +1,56 @@
+{
+  "name": "sobt-vault-base",
+  "version": "2026.1.0",
+  "description": "SOBT ICW Developer Tools – platform for building and managing SOBT courseware utilities.",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist:mac:arm64": "electron-builder --mac dmg --arm64",
+    "dist:win:arm64": "electron-builder --win nsis --arm64",
+    "dist:win:x64": "electron-builder --win nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.strikelab.sobt-vault",
+    "productName": "SOBT Vault",
+    "files": [
+      "electron/**/*",
+      "ui/**/*",
+      "tools/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "arm64",
+            "x64"
+          ]
+        }
+      ],
+      "nsis": {
+        "oneClick": false,
+        "perMachine": false,
+        "allowToChangeInstallationDirectory": true
+      }
+    }
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16"
+  }
+}

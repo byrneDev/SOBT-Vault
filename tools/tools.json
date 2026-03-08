@@ -1,0 +1,11 @@
+{
+  "tools": [
+    {
+      "name": "VaultSCO Builder",
+      "description": "Build CourseVault-ready SOBT SCO packages",
+      "entry": "../tools/sco-builder/index.html",
+      "icon": "",
+      "category": "Builder"
+    }
+  ]
+}

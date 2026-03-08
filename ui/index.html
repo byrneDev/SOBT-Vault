@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Vault App</title>
+<link rel="stylesheet" href="vault.css">
+</head>
+<body>
+
+<div id="splash-screen" class="vault-splash">
+  <div class="splash-content">
+    <img src="./assets/appLogo.png" class="splash-logo" alt="SOBT Vault" />
+    <h2 class="splash-title">SOBT VAULT</h2>
+    <p class="splash-subtitle">Vault Console Initializing...</p>
+
+    <div class="splash-console" id="splashConsole">
+      <div>Boot sequence start...</div>
+      <div>Loading Vault modules...</div>
+      <div>Verifying environment...</div>
+      <div>Preparing dashboard...</div>
+    </div>
+
+    <div class="splash-progress">
+      <div class="splash-progress-bar" id="splashProgress"></div>
+    </div>
+
+    <div class="splash-scanlines"></div>
+  </div>
+</div>
+
+<header class="vault-header">
+  <div class="brand">
+    <img src="./assets/appLogo.png" class="vault-banner" alt="SOBT Vault" />
+  </div>
+
+  <div class="header-actions">
+    <button id="settingsBtn" class="vault-btn secondary">Settings</button>
+    <button id="helpBtn" class="vault-btn secondary">Help</button>
+  </div>
+</header>
+
+<section class="vault-toolbar">
+  <div class="toolbar-left">
+    <input type="text" class="vault-search" placeholder="Search or filter content...">
+  </div>
+</section>
+
+<main class="vault-layout">
+
+  <section class="vault-cards">
+  </section>
+
+  <section class="vault-runner">
+    <iframe class="vault-frame" title="Vault Runner" aria-label="Vault Runner"></iframe>
+  </section>
+
+  <section class="vault-details" aria-label="Vault Details Panel">
+    <div class="details-header">App Details</div>
+    <div class="details-content" id="detailsContent">
+      <div class="details-empty">Select <strong>Details</strong> on any Vault app to view more information here.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="vault-footer">
+  <span>Made by STRIKE Lab</span>
+  <span id="appVersion">Version ...</span>
+</footer>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const splash = document.getElementById("splash-screen");
+  const progress = document.getElementById("splashProgress");
+
+  let value = 0;
+
+  const timer = setInterval(() => {
+    value += 10;
+    if (progress) progress.style.width = value + "%";
+
+    if (value >= 100) {
+      clearInterval(timer);
+
+      setTimeout(() => {
+        splash.style.opacity = "0";
+        setTimeout(() => splash.remove(), 400);
+      }, 300);
+    }
+  }, 120);
+});
+</script>
+<script src="vault.js"></script>
+</body>
+</html>

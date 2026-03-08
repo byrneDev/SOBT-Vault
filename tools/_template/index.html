@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SOBT Developer Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="header-row">
+            <div class="brand">
+                <img src="logo.png" alt="SOBT Developer Tool Logo" class="brand-logo">
+                <div class="brand-text">
+                    <h1>SOBT Developer Tool</h1>
+                    <p class="subtitle">Tool Template for SOBT ICW Developer Tools</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="aboutBtn" class="secondary-btn">About</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="panel">
+
+        <form id="toolForm">
+
+            <div class="form-row">
+                <label>Tool Action</label>
+                <div>
+                    <button type="button" id="runToolBtn" class="primary-btn">Run Tool</button>
+                </div>
+            </div>
+
+        </form>
+
+    </section>
+
+    <section class="panel status-panel">
+
+        <h3>Tool Status</h3>
+
+        <div id="progressContainer" class="progress-container hidden">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+
+        <div id="statusMessage" class="status-message">
+            Awaiting tool action...
+        </div>
+
+        <div class="log-container">
+            <h4>Tool Log</h4>
+            <pre id="logOutput"></pre>
+        </div>
+
+    </section>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

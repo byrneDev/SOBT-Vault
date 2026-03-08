@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>VaultSCO Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="header-row">
+            <div class="brand">
+                <img src="logo.png" alt="VaultSCO Builder Logo" class="brand-logo">
+                <div class="brand-text">
+                    <h1>VaultSCO Builder</h1>
+                    <p class="subtitle">Secure CourseVault-Ready SCO Export Tool</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button id="clearUploadsBtn" class="secondary-btn">Clear Uploads</button>
+                <button id="aboutBtn" class="secondary-btn">About</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="panel">
+
+        <form id="buildForm">
+
+            <div class="form-row">
+                <label>Slides ZIP</label>
+                <div class="zip-select-row">
+                    <button type="button" id="selectZipBtn" class="secondary-btn">Select ZIP File</button>
+                    <span id="selectedZipName" class="zip-name">No file selected</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>Course Title</label>
+                <input type="text" id="titleInput" placeholder="Enter course title" required>
+            </div>
+
+            <button type="submit" class="primary-btn">Build SCO</button>
+
+        </form>
+
+    </section>
+
+    <section class="panel status-panel">
+
+        <h3>Tool Status</h3>
+
+        <div id="progressContainer" class="progress-container hidden">
+            <div id="progressBar" class="progress-bar"></div>
+        </div>
+
+        <div id="statusMessage" class="status-message">
+            Awaiting build...
+        </div>
+
+        <div class="log-container">
+            <h4>Tool Log</h4>
+            <pre id="logOutput"></pre>
+        </div>
+
+    </section>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>

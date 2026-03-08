@@ -1,0 +1,257 @@
+/* ===============================
+   GLOBAL LAYOUT
+================================ */
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+    background-color: #0f1117;
+    color: #e6edf3;
+    user-select: none;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+header {
+    margin-bottom: 30px;
+}
+
+h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.subtitle {
+    margin-top: 6px;
+    color: #8b949e;
+    font-size: 14px;
+}
+
+/* ===============================
+   PANELS
+================================ */
+
+.panel {
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 25px;
+}
+
+.status-panel h3 {
+    margin-top: 0;
+}
+
+/* ===============================
+   FORM
+================================ */
+
+.form-row {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #8b949e;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    color: #e6edf3;
+    font-size: 14px;
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: none;
+    border-color: #58a6ff;
+}
+
+/* ===============================
+   BUTTON
+================================ */
+
+.primary-btn {
+    width: 100%;
+    padding: 12px 18px;
+    background: linear-gradient(145deg, #f2c94c, #caa63a);
+    border: 2px solid #8a6d1d;
+    border-radius: 4px;
+    color: #1a1a1a;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #8a6d1d, 0 0 10px rgba(242, 201, 76, 0.45);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.primary-btn:hover {
+    background: linear-gradient(145deg, #ffe27a, #d4b24d);
+    box-shadow: 0 2px 0 #8a6d1d, 0 0 14px rgba(255, 226, 122, 0.7);
+    transform: translateY(2px);
+}
+
+.primary-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #8a6d1d, 0 0 10px rgba(255, 226, 122, 0.6);
+}
+
+.secondary-btn {
+    padding: 8px 14px;
+    background: linear-gradient(145deg, #2e3b44, #1b252c);
+    border: 2px solid #4b5d68;
+    border-radius: 4px;
+    color: #9ec3d6;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #162028, 0 0 8px rgba(158, 195, 214, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.secondary-btn:hover {
+    background: linear-gradient(145deg, #3a4b56, #22313a);
+    box-shadow: 0 1px 0 #162028, 0 0 12px rgba(158, 195, 214, 0.5);
+    transform: translateY(2px);
+}
+
+.secondary-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 #162028, 0 0 10px rgba(158, 195, 214, 0.45);
+}
+
+/* ===============================
+   PROGRESS BAR
+================================ */
+
+.progress-container {
+    width: 100%;
+    height: 10px;
+    background-color: #30363d;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: #58a6ff;
+    transition: width 0.3s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ===============================
+   STATUS + LOG
+================================ */
+
+.status-message {
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.log-container {
+    margin-top: 15px;
+}
+
+.log-container h4 {
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #8b949e;
+}
+
+pre {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 12px;
+    max-height: 250px;
+    overflow-y: auto;
+    font-size: 12px;
+    color: #c9d1d9;
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-row .secondary-btn {
+    margin-top: 0;
+}
+
+.app-footer {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #30363d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-footer span {
+    font-size: 12px;
+    color: #8b949e;
+}
+
+.app-madeby {
+    font-size: 12px;
+    color: #8b949e;
+}
+
+/* ===============================
+   BRAND + LOGO
+================================ */
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.brand-logo {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgba(242, 201, 76, 0.35);
+}
+
+.brand-text h1 {
+    margin: 0;
+}
+
+.brand-text .subtitle {
+    margin-top: 4px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Allow selection only in inputs and logs */
+input,
+textarea,
+pre {
+    user-select: text;
+}

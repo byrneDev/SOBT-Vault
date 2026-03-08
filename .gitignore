@@ -1,0 +1,20 @@
+# Node
+node_modules/
+npm-debug.log
+
+# Electron builds
+dist/
+out/
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+__MACOSX/
+
+# Logs
+*.log
+
+# Temporary
+tmp/
+temp/

@@ -1,0 +1,352 @@
+html, body {
+  overflow: hidden;
+}
+body {
+  background: #0b0f14;
+  color: #e5e7eb;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
+  margin: 0;
+}
+
+/* ===============================
+   HEADER
+================================ */
+.vault-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #1f2937;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.vault-banner {
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.title h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.title span {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ===============================
+   TOOLBAR
+================================ */
+.vault-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid #1f2937;
+}
+
+.toolbar-left {
+  flex: 1;
+  display: flex;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.vault-search {
+  width: 100%;
+  flex: 1;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 4px;
+  border: 1px solid #374151;
+  background: #111827;
+  color: #e5e7eb;
+  box-sizing: border-box;
+}
+
+/* ===============================
+   LAYOUT
+================================ */
+.vault-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  grid-template-rows: 1fr 220px;
+  grid-template-areas:
+    "cards runner"
+    "details details";
+  height: calc(100vh - 140px);
+}
+
+.vault-cards {
+  border-right: 1px solid #1f2937;
+  padding: 1rem;
+  overflow-y: auto;
+  grid-area: cards;
+}
+
+.vault-runner {
+  background: #05080c;
+  display: flex;
+  grid-area: runner;
+}
+
+.vault-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  overflow: hidden;
+}
+
+/* ===============================
+   CARDS
+================================ */
+.vault-card {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 6px;
+  padding: 14px;
+  margin-bottom: 12px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.vault-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+}
+
+
+.vault-card.active {
+  border-color: #f2c94c;
+  box-shadow: 0 0 10px rgba(242, 201, 76, 0.4);
+  transform: translateY(-1px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.card-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.card-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 10px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ===============================
+   BUTTONS (Fallout-style theme)
+================================ */
+.vault-btn {
+  font-size: 12px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 4px;
+  border: 1px solid #374151;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.vault-btn.primary {
+  background: #f2c94c;
+  color: #111827;
+  border-color: #bfa03c;
+  font-weight: 600;
+}
+
+.vault-btn.primary:hover {
+  background: #ffd84a;
+}
+
+.vault-btn.secondary {
+  background: #1f2937;
+  color: #e5e7eb;
+}
+
+.vault-btn.secondary:hover {
+  background: #374151;
+}
+
+/* ===============================
+   FOOTER
+================================ */
+.vault-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-top: 1px solid #1f2937;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* ===============================
+   DETAILS PANEL
+================================ */
+.vault-details {
+  grid-area: details;
+  border-top: 1px solid #1f2937;
+  background: #0f172a;
+  display: flex;
+  flex-direction: column;
+}
+
+.details-header {
+  padding: 10px 14px;
+  border-bottom: 1px solid #1f2937;
+  font-size: 12px;
+  color: #9ca3af;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.details-content {
+  padding: 14px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.details-empty {
+  color: #9ca3af;
+  font-size: 13px;
+}
+
+/* ===============================
+   SPLASH SCREEN
+================================ */
+.vault-splash {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #0f172a 0%, #05080c 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.4s ease;
+}
+
+.splash-content {
+  text-align: center;
+}
+
+.splash-logo {
+  width: 180px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 18px rgba(242, 201, 76, 0.45));
+}
+
+.splash-title {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+
+.splash-subtitle {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* ===============================
+   SPLASH CONSOLE
+================================ */
+.splash-console {
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 16px;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
+/* ===============================
+   SPLASH PROGRESS BAR
+================================ */
+.splash-progress {
+  width: 260px;
+  height: 6px;
+  background: #1f2937;
+  margin: 18px auto 0 auto;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.splash-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #f2c94c, #ffd84a);
+  transition: width 0.12s linear;
+}
+
+/* ===============================
+   SCANLINES (CRT EFFECT)
+================================ */
+.splash-scanlines {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.03) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+  animation: vaultScan 6s linear infinite;
+}
+
+@keyframes vaultScan {
+  from { background-position-y: 0px; }
+  to { background-position-y: 200px; }
+}
+
+/* Ensure splash is positioning context for scanlines */
+.vault-splash {
+  position: fixed;
+}
