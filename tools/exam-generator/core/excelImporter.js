@@ -1,5 +1,3 @@
-
-
 /**
  * Excel Importer for SOBT Exam Generator
  *
@@ -45,7 +43,12 @@ export function importExcel(arrayBuffer) {
 
   const workbook = XLSX.read(arrayBuffer, { type: 'array' });
 
-  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  // Prefer the "Questions" sheet if it exists, otherwise fall back to the first sheet
+  const sheetName = workbook.SheetNames.includes('Questions')
+    ? 'Questions'
+    : workbook.SheetNames[0];
+
+  const sheet = workbook.Sheets[sheetName];
 
   const rows = XLSX.utils.sheet_to_json(sheet);
 
@@ -82,6 +85,10 @@ export function importExcel(arrayBuffer) {
       choices: buildChoiceSet(row),
       remediation: row.Remediation || ''
     });
+
+    // Preserve TOS/EOS explicitly on the question object
+    question.tos = tosName;
+    question.eos = eosName;
 
     tos.poolEOS.questionItem.push(question);
 
