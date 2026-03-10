@@ -350,3 +350,38 @@ body {
 .vault-splash {
   position: fixed;
 }
+
+/* ===============================
+   TAB BAR (Workspace Tabs)
+================================ */
+.vault-tabbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  min-height: 38px;
+  background: #05080c;
+  border-top: 1px solid #1f2937;
+  overflow-x: auto;
+}
+
+.vault-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 4px 4px 0 0;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.vault-tab span:last-child {
+  font-weight: bold;
+  opacity: 0.6;
+}
+
+.vault-tab span:last-child:hover {
+  opacity: 1;
+}
