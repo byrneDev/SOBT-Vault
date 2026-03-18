@@ -1,0 +1,166 @@
+/* ===============================
+   BASE / RESET
+================================ */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #0f1117; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif; }
+
+/* ===============================
+   LAYOUT
+================================ */
+.container { padding: 16px; }
+.panel {
+  background: #111827;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 18px;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 12px;
+}
+.title { font-size: 16px; font-weight: 600; }
+.subtitle { font-size: 12px; color: #9ca3af; }
+
+/* ===============================
+   BUTTONS
+================================ */
+.primary-btn {
+  background: linear-gradient(180deg, #e7c35a, #c9a43a);
+  color: #111;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 14px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  display: block;
+  width: 100%;
+}
+
+/* HARD FORCE primary buttons full width in forms */
+.form-group .primary-btn {
+  width: 100% !important;
+  display: block !important;
+  margin-top: 10px;
+}
+
+/* FORCE full width inside panels regardless of nesting */
+.panel .primary-btn:not(.inline) {
+  width: 100% !important;
+  display: block !important;
+}
+
+.primary-btn.inline {
+  display: inline-flex;
+  width: auto;
+}
+.primary-btn.full-width {
+  width: 100%;
+  margin-top: 10px;
+}
+.primary-btn:hover { filter: brightness(1.05); }
+.secondary-btn { background: #1f2937; color: #cbd5e1; border: 1px solid #374151; border-radius: 6px; padding: 10px 12px; cursor: pointer; font-size: 12px; }
+.secondary-btn:hover { background: #273244; }
+.action-row {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+/* ===============================
+   FORMS
+================================ */
+.input, .form-input, select, textarea {
+  width: 100%;
+  background: #020617;
+  color: #e6edf3;
+  border: 1px solid #374151;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 12px;
+  display: block;
+}
+textarea { resize: vertical; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+.form-group > * + * {
+  margin-top: 8px;
+}
+.label {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.label + .input,
+.label + .form-input,
+.label + select,
+.label + textarea {
+  margin-top: 6px;
+}
+
+/* Row alignment utility for file input sections */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+
+.row .secondary-btn {
+  flex-shrink: 0;
+}
+
+.row .status {
+  font-size: 12px;
+  color: #9ca3af;
+  white-space: nowrap;
+}
+
+/* ===============================
+   STATUS / LOG
+================================ */
+.status {
+  font-size: 12px;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+.log { background: #020617; border: 1px solid #374151; border-radius: 6px; padding: 8px; font-family: monospace; font-size: 11px; color: #9ca3af; max-height: 120px; overflow-y: auto; }
+
+/* ===============================
+   COLLAPSIBLE GROUPS
+================================ */
+.collapsible-group { border: 1px solid #374151; border-radius: 6px; margin-bottom: 8px; }
+.collapsible-group summary { cursor: pointer; padding: 8px 10px; font-size: 12px; }
+.collapsible-group[open] summary { background: #1f2937; }
+
+/* ===============================
+   TEXT TOOLBAR
+================================ */
+.text-toolbar { display: flex; gap: 6px; align-items: center; }
+.text-toolbar button { padding: 6px 8px; border-radius: 4px; border: 1px solid #374151; background: #1f2937; color: #cbd5e1; cursor: pointer; }
+.text-toolbar button.active { background: #374151; }
+
+/* ===============================
+   SCROLLBARS (WEBSTORM STYLE)
+================================ */
+*::-webkit-scrollbar { width: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background-color: rgba(120,140,160,0.35); border-radius: 6px; border: 2px solid transparent; background-clip: content-box; }
+*::-webkit-scrollbar-thumb:hover { background-color: rgba(160,180,200,0.6); }
+* { scrollbar-width: thin; scrollbar-color: rgba(120,140,160,0.35) transparent; }
+
+.panel > * {
+  min-width: 0;
+}

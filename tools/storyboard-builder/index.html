@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SOBT Storyboard Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+
+        <div class="header-row">
+
+            <div class="brand">
+                <img src="logo.png" class="brand-logo">
+
+                <div class="brand-text">
+                    <h1>SOBT Storyboard Builder</h1>
+                    <p class="subtitle">Storyboard slides for customer review</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <button id="addSlideBtn" class="secondary-btn">Add Slide</button>
+                <button id="duplicateSlideBtn" class="secondary-btn">Duplicate Slide</button>
+                <button id="deleteSlideBtn" class="secondary-btn">Delete Slide</button>
+                <button id="exportBtn" class="primary-btn">Export to SCO</button>
+                <button id="saveProjectBtn" class="secondary-btn">Save Project</button>
+                <button id="loadProjectBtn" class="secondary-btn">Load Project</button>
+
+                <button id="gridToggleBtn" class="secondary-btn">Grid</button>
+
+                <div class="zoom-controls">
+                    <button id="zoomOutBtn" class="secondary-btn">−</button>
+                    <span id="zoomDisplay">100%</span>
+                    <button id="zoomInBtn" class="secondary-btn">+</button>
+                </div>
+
+
+                <button id="aboutBtn" class="secondary-btn">About</button>
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <section class="panel">
+
+        <div class="workspace">
+
+            <div class="slides-panel">
+
+                <h3 class="panel-heading">Slides</h3>
+
+                <div id="slidesList"></div>
+
+                <button id="addSlideBtn2" class="secondary-btn">+ Slide</button>
+
+            </div>
+
+            <div class="canvas-panel">
+
+                <h3 class="panel-heading">Slide Canvas</h3>
+
+                <div class="text-toolbar">
+
+                    <div class="toolbar-group">
+                        <span class="toolbar-label">Format</span>
+                        <button id="boldBtn" class="secondary-btn">B</button>
+                        <button id="italicBtn" class="secondary-btn">I</button>
+                        <button id="underlineBtn" class="secondary-btn">U</button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <span class="toolbar-label">Align</span>
+                        <button id="alignLeftBtn" class="secondary-btn">⟸</button>
+                        <button id="alignCenterBtn" class="secondary-btn">≡</button>
+                        <button id="alignRightBtn" class="secondary-btn">⟹</button>
+                    </div>
+
+                    <div class="toolbar-group">
+                        <span class="toolbar-label">Font</span>
+                        <select id="toolbarFontFamily" class="secondary-btn">
+                            <option value="Arial">Arial</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Times New Roman">Times</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Courier New">Courier</option>
+                        </select>
+
+                        <input id="toolbarFontSize" type="number" value="24" class="form-input" style="width:70px">
+
+                        <input id="toolbarTextColor" type="color" class="form-input" style="width:60px">
+                    </div>
+
+                </div>
+
+                <div class="canvas-controls">
+
+    <div class="form-row">
+        <label>Slide Title</label>
+        <input id="slideTitleInput" class="form-input" placeholder="Enter slide name">
+    </div>
+
+    <details class="collapsible-group elements-group">
+        <summary><span class="collapse-indicator">▾</span> <strong>Elements</strong></summary>
+
+        <div class="form-grid">
+            <div class="form-row">
+                <button id="addTextBtn" class="secondary-btn">Add Text</button>
+            </div>
+
+            <div class="form-row">
+                <button id="addImageBtn" class="secondary-btn">Add Image</button>
+            </div>
+
+            <div class="form-row">
+                <button id="addRectBtn" class="secondary-btn">Rectangle</button>
+            </div>
+
+            <div class="form-row">
+                <button id="addCircleBtn" class="secondary-btn">Circle</button>
+            </div>
+
+            <div class="form-row">
+                <button id="addTriangleBtn" class="secondary-btn">Triangle</button>
+            </div>
+        </div>
+
+    </details>
+
+    <details class="collapsible-group properties-group">
+        <summary><span class="collapse-indicator">▾</span> <strong>Properties</strong></summary>
+
+        <details class="collapsible-group property-section">
+            <summary><span class="collapse-indicator">▾</span> <strong>Text</strong></summary>
+
+            <div class="form-row">
+                <label>Text</label>
+                <textarea id="textInput"></textarea>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-row">
+                    <label>Font Family</label>
+                    <select id="fontFamilyInput" class="form-input">
+                        <option value="Arial">Arial</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Courier New">Courier New</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label>Font Size</label>
+                    <input id="fontSizeInput" class="form-input" type="number" placeholder="Font Size">
+                </div>
+
+                <div class="form-row">
+                    <label>Text Color</label>
+                    <input id="textColorInput" class="form-input" type="color">
+                </div>
+            </div>
+
+        </details>
+
+        <details class="collapsible-group property-section">
+            <summary><span class="collapse-indicator">▾</span> <strong>Shape</strong></summary>
+
+            <div class="form-grid">
+                <div class="form-row">
+                    <label>Shape Fill Color</label>
+                    <input id="shapeFillInput" class="form-input" type="color">
+                </div>
+
+                <div class="form-row">
+                    <label>Shape Border Color</label>
+                    <input id="shapeBorderColorInput" class="form-input" type="color">
+                </div>
+
+                <div class="form-row">
+                    <label>Border Width</label>
+                    <input id="shapeBorderWidthInput" class="form-input" type="number" placeholder="Border Width">
+                </div>
+
+                <div class="form-row">
+                    <label>Corner Radius</label>
+                    <input id="shapeRadiusInput" class="form-input" type="number" placeholder="Corner Radius">
+                </div>
+
+                <div class="form-row">
+                    <label>Text Inside Shape</label>
+                    <input id="shapeTextInput" class="form-input" placeholder="Shape Label">
+                </div>
+            </div>
+
+        </details>
+
+        <details class="collapsible-group property-section">
+            <summary><span class="collapse-indicator">▾</span> <strong>Position & Size</strong></summary>
+
+            <div class="form-grid">
+                <div class="form-row">
+                    <label>X</label>
+                    <input id="posX" class="form-input" placeholder="X">
+                </div>
+
+                <div class="form-row">
+                    <label>Y</label>
+                    <input id="posY" class="form-input" placeholder="Y">
+                </div>
+
+                <div class="form-row">
+                    <label>Width</label>
+                    <input id="widthInput" class="form-input" placeholder="Width">
+                </div>
+
+                <div class="form-row">
+                    <label>Height</label>
+                    <input id="heightInput" class="form-input" placeholder="Height">
+                </div>
+            </div>
+
+        </details>
+
+    </details>
+
+</div>
+
+                <div id="canvas" class="slide-canvas"></div>
+
+                <div class="slide-notes">
+                    <label>Slide Notes</label>
+                    <textarea id="slideNotesInput" class="form-input" placeholder="Enter presenter notes for this slide"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="panel status-panel">
+
+        <h3 class="panel-heading">Tool Log</h3>
+
+        <pre id="logOutput"></pre>
+
+    </section>
+
+</div>
+
+<script src="node_modules/jszip/dist/jszip.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

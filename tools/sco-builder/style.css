@@ -55,29 +55,14 @@ h1 {
    FORM
 ================================ */
 
-.form-row {
-    margin-bottom: 32px;
-}
-
-label {
-    display: block;
-    font-size: 13px;
-    margin-bottom: 10px;
-    color: #8b949e;
-}
-
+/* Use shared UI input styling */
 input[type="text"],
 select,
 textarea,
 .form-input {
+    all: unset;
+    display: block;
     width: 100%;
-    padding: 14px;
-    background-color: #0d1117;
-    border: 1px solid #30363d;
-    border-radius: 6px;
-    color: #e6edf3;
-    font-size: 14px;
-    box-sizing: border-box;
 }
 
 textarea {
@@ -158,6 +143,7 @@ select:focus {
 ================================ */
 
 .primary-btn {
+    font-size: 12px;
     width: auto;
     padding: 12px 18px;
     background: linear-gradient(145deg, #f2c94c, #caa63a);
@@ -184,6 +170,7 @@ select:focus {
 }
 
 .secondary-btn {
+    font-size: 12px;
     padding: 8px 14px;
     background: linear-gradient(145deg, #2e3b44, #1b252c);
     border: 2px solid #4b5d68;

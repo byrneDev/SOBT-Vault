@@ -1,9 +1,9 @@
 {
   "tools": [
     {
-      "name": "VaultSCO Builder",
-      "description": "Build CourseVault-ready SOBT SCO packages",
-      "entry": "../tools/sco-builder/index.html",
+      "name": "Storyboard Builder",
+      "description": "Visual slide-based storyboard editor",
+      "entry": "../tools/storyboard-builder/index.html",
       "icon": "",
       "category": "Builder"
     },
@@ -13,6 +13,13 @@
       "entry": "../tools/exam-generator/index.html",
       "icon": "",
       "category": "Assessment"
+    },
+    {
+      "name": "VaultSCO Builder",
+      "description": "Build CourseVault-ready SOBT SCO packages",
+      "entry": "../tools/sco-builder/index.html",
+      "icon": "",
+      "category": "Builder"
     }
   ]
 }

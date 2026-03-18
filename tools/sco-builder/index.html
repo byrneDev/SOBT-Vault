@@ -3,11 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <title>VaultSCO Builder</title>
+    <link rel="stylesheet" href="../_shared/ui.css">
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <style>
+      .vaultsco-builder-page {
+        background: #0b0f14;
+      }
 
-<div class="container">
+      .vaultsco-builder-page .sco-shell {
+        padding: 16px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .vaultsco-builder-page .sco-panel {
+        background: linear-gradient(180deg, #151b24 0%, #10161f 100%) !important;
+        border: 1px solid #2f3947 !important;
+        border-radius: 10px !important;
+        padding: 24px !important;
+        margin-bottom: 22px !important;
+        width: 100% !important;
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.03),
+          0 0 0 1px rgba(255,255,255,0.03),
+          0 10px 30px rgba(0,0,0,0.28) !important;
+      }
+
+      .vaultsco-builder-page .sco-build-panel form {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .vaultsco-builder-page .sco-build-panel .form-group {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        margin: 0 !important;
+      }
+
+      .vaultsco-builder-page .sco-build-panel .label {
+        display: block !important;
+        margin: 0 !important;
+        font-size: 13px !important;
+        color: #c7d0dc !important;
+      }
+
+      .vaultsco-builder-page .sco-build-panel .row.zip-select-row {
+        display: flex !important;
+        align-items: center !important;
+        gap: 14px !important;
+        flex-wrap: wrap !important;
+        margin: 0 !important;
+      }
+
+      .vaultsco-builder-page .sco-build-panel .status {
+        display: inline-flex !important;
+        align-items: center !important;
+        min-height: 36px !important;
+        padding: 0 12px !important;
+        border: 1px solid #303946 !important;
+        border-radius: 6px !important;
+        background: #0a0f17 !important;
+        color: #d7dee7 !important;
+        font-size: 12px !important;
+        line-height: 1 !important;
+        margin: 0 !important;
+      }
+
+      .vaultsco-builder-page .sco-build-panel .input {
+        width: 100% !important;
+        min-height: 40px !important;
+        padding: 10px 12px !important;
+        border: 1px solid #303946 !important;
+        border-radius: 6px !important;
+        background: #0a0f17 !important;
+        color: #e6edf3 !important;
+        box-sizing: border-box !important;
+      }
+
+      .vaultsco-builder-page .sco-build-panel .primary-btn.full-width {
+        width: 100% !important;
+        display: block !important;
+        margin-top: 4px !important;
+      }
+
+      .vaultsco-builder-page .sco-status-panel {
+        margin-top: 4px !important;
+      }
+
+      .vaultsco-builder-page .sco-status-panel h3,
+      .vaultsco-builder-page .sco-status-panel h4 {
+        margin-top: 0;
+      }
+    </style>
+</head>
+<body class="vaultsco-builder-page">
+
+<div class="container sco-shell">
 
     <header>
         <div class="header-row">
@@ -25,30 +118,30 @@
         </div>
     </header>
 
-    <section class="panel">
+    <section class="panel sco-panel sco-build-panel">
 
         <form id="buildForm">
 
-            <div class="form-row">
-                <label>Slides ZIP</label>
-                <div class="zip-select-row">
+            <div class="form-group">
+                <label class="label">Slides ZIP</label>
+                <div class="row zip-select-row">
                     <button type="button" id="selectZipBtn" class="secondary-btn">Select ZIP File</button>
-                    <span id="selectedZipName" class="zip-name">No file selected</span>
+                    <span id="selectedZipName" class="status">No file selected</span>
                 </div>
             </div>
 
-            <div class="form-row">
-                <label>Course Title</label>
-                <input type="text" id="titleInput" placeholder="Enter course title" required>
+            <div class="form-group">
+                <label class="label">Course Title</label>
+                <input type="text" id="titleInput" class="input" placeholder="Enter course title" required>
             </div>
 
-            <button type="submit" class="primary-btn">Build SCO</button>
+            <button type="submit" class="primary-btn full-width">Build SCO</button>
 
         </form>
 
     </section>
 
-    <section class="panel status-panel">
+    <section class="panel status-panel sco-panel sco-status-panel">
 
         <h3>Tool Status</h3>
 

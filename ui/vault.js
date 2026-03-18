@@ -29,10 +29,11 @@ const workspaceManager = {
 }
 
 function getToolWorkspaceHost() {
-  let workspace = document.getElementById('workspace')
+  // Attach host to the runner area only (prevents blocking sidebar)
+  let workspace = document.querySelector('.vault-runner')
 
   if (!workspace) {
-    workspace = document.querySelector('.workspace')
+    workspace = document.getElementById('workspace') || document.querySelector('.workspace')
   }
 
   if (!workspace) {
@@ -41,7 +42,6 @@ function getToolWorkspaceHost() {
   }
 
   workspace.style.position = 'relative'
-  workspace.style.overflow = 'hidden'
 
   let host = document.getElementById('vaultToolWorkspaceHost')
 
@@ -54,7 +54,8 @@ function getToolWorkspaceHost() {
     host.style.width = '100%'
     host.style.height = '100%'
     host.style.background = 'transparent'
-    host.style.zIndex = '2'
+    host.style.zIndex = '1'
+    host.style.pointerEvents = 'none'
 
     workspace.appendChild(host)
   }
@@ -63,20 +64,26 @@ function getToolWorkspaceHost() {
 }
 
 function ensureTabBar() {
-  let tabBar = document.querySelector('.vault-tabbar')
-  if (!tabBar) {
-    tabBar = document.createElement('div')
-    tabBar.className = 'vault-tabbar'
-    tabBar.style.display = 'flex'
-    tabBar.style.gap = '4px'
-    tabBar.style.padding = '6px'
-    tabBar.style.borderBottom = '1px solid #2a2a2a'
-    tabBar.style.background = '#111'
+  let tabBar = document.getElementById('topTabbar');
 
-    const workspace = document.querySelector('#workspace') || document.querySelector('.workspace') || document.body
-    workspace.parentNode.insertBefore(tabBar, workspace)
+  if (!tabBar) {
+    tabBar = document.querySelector('.vault-tabbar');
   }
-  return tabBar
+
+  if (!tabBar) {
+    tabBar = document.createElement('div');
+    tabBar.className = 'vault-tabbar';
+
+    const toolbar = document.querySelector('.vault-toolbar');
+
+    if (toolbar) {
+      toolbar.appendChild(tabBar);
+    } else {
+      document.body.appendChild(tabBar);
+    }
+  }
+
+  return tabBar;
 }
 
 function createTab(app) {
@@ -161,7 +168,10 @@ function closeToolSession(toolName) {
   const host = document.getElementById('vaultToolWorkspaceHost')
 
   if (!remainingTools.length) {
-    if (host) host.style.display = 'none'
+    if (host) {
+      host.style.display = 'none'
+      host.style.pointerEvents = 'none'
+    }
   } else {
     const nextTool = remainingTools[0]
     currentTool = nextTool
@@ -177,6 +187,7 @@ function activateToolFrame(toolName) {
   if (!host) return
 
   host.style.display = 'block'
+  host.style.pointerEvents = 'auto'
 
   Object.keys(toolFrames).forEach(name => {
     const f = toolFrames[name]
@@ -411,6 +422,61 @@ function renderVaultApps() {
 window.addEventListener("DOMContentLoaded", async () => {
   console.log("Vault dashboard initializing");
 
+  // HARD RESET: remove any lingering workspace host overlay
+  const existingHost = document.getElementById('vaultToolWorkspaceHost');
+  if (existingHost) {
+    existingHost.remove();
+  }
+
+  // Restore App Details open/closed state
+  const detailsPanel = document.querySelector('.vault-details');
+  if (detailsPanel) {
+    const savedState = localStorage.getItem('vaultDetailsOpen');
+    if (savedState === 'false') {
+      detailsPanel.removeAttribute('open');
+    }
+
+    detailsPanel.addEventListener('toggle', () => {
+      localStorage.setItem('vaultDetailsOpen', detailsPanel.hasAttribute('open'));
+    });
+
+    // Restore App Details height
+    const savedHeight = localStorage.getItem('vaultDetailsHeight');
+    if (detailsPanel && savedHeight) {
+      detailsPanel.style.maxHeight = savedHeight + 'px';
+    }
+  }
+
+  // Drag resize for App Details panel
+  if (detailsPanel) {
+    let isResizing = false;
+
+    detailsPanel.addEventListener('mousedown', (e) => {
+      const rect = detailsPanel.getBoundingClientRect();
+      if (e.clientY > rect.bottom - 6) {
+        isResizing = true;
+        document.body.style.cursor = 'row-resize';
+      }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isResizing) return;
+
+      const newHeight = window.innerHeight - e.clientY;
+      if (newHeight > 80 && newHeight < 400) {
+        detailsPanel.style.maxHeight = newHeight + 'px';
+        localStorage.setItem('vaultDetailsHeight', newHeight);
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isResizing) {
+        isResizing = false;
+        document.body.style.cursor = '';
+      }
+    });
+  }
+
   await loadVaultApps();
 
   // Restore previous workspace
@@ -528,6 +594,43 @@ window.addEventListener("DOMContentLoaded", async () => {
         frame.src = "";
         frame.src = currentSrc;
       }
+    });
+  }
+
+  // Ensure sidebar always sits above workspace host
+  const sidebarEl = document.getElementById('sidebar');
+  if (sidebarEl) {
+    sidebarEl.style.position = 'relative';
+    sidebarEl.style.zIndex = '5';
+  }
+
+  // Sidebar collapse toggle
+  const sidebar = document.getElementById('sidebar');
+  const sidebarToggle = document.getElementById('sidebarToggle');
+  const layout = document.querySelector('.vault-layout');
+
+  // Force sidebar visible on initial load (fix blank screen issue)
+  if (sidebar) {
+    sidebar.classList.remove('collapsed');
+    sidebar.style.display = 'block';
+    sidebar.style.width = '360px';
+  }
+
+  if (layout) {
+    layout.classList.remove('collapsed');
+  }
+
+  if (sidebar && sidebarToggle) {
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+
+      if (layout) {
+        layout.classList.toggle('collapsed');
+      }
+
+      // update arrow direction
+      const isCollapsed = sidebar.classList.contains('collapsed');
+      sidebarToggle.textContent = isCollapsed ? '▶' : '◀';
     });
   }
 });

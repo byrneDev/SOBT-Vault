@@ -43,26 +43,32 @@
 </div>
 
 <section class="vault-toolbar">
-  <div class="toolbar-left">
-    <input type="text" class="vault-search" placeholder="Search or filter content...">
-  </div>
+  <!-- Tabs will be moved here by vault.js -->
+  <div class="vault-tabbar" id="topTabbar"></div>
 </section>
 
 <main class="vault-layout">
 
-  <section class="vault-cards">
-  </section>
+  <div class="sidebar-wrapper">
+
+    <div class="sidebar-toggle" id="sidebarToggle">◀</div>
+
+    <section class="vault-cards" id="sidebar">
+    </section>
+
+  </div>
 
   <section id="workspace" class="vault-runner" aria-label="Vault Workspace">
     <!-- Tool iframes will be injected here dynamically by vault.js -->
   </section>
 
-  <section class="vault-details" aria-label="Vault Details Panel">
-    <div class="details-header">App Details</div>
+  <details class="vault-details collapsible-group" open>
+    <summary><span class="collapse-indicator">▾</span> <strong>App Details</strong></summary>
+
     <div class="details-content" id="detailsContent">
       <div class="details-empty">Select <strong>Details</strong> on any Vault app to view more information here.</div>
     </div>
-  </section>
+  </details>
 
 </main>
 

@@ -2,6 +2,8 @@
   "name": "sobt-vault-base",
   "version": "2026.1.0",
   "description": "SOBT ICW Developer Tools – platform for building and managing SOBT courseware utilities.",
+  "author": "Dr. Joshua Byrne / Strike Lab",
+  "license": "Proprietary",
   "main": "electron/main.js",
   "scripts": {
     "start": "electron .",
@@ -16,6 +18,9 @@
   "build": {
     "appId": "com.strikelab.sobt-vault",
     "productName": "SOBT Vault",
+    "artifactName": "${productName}-${version}-${arch}.${ext}",
+    "compression": "normal",
+    "asar": true,
     "files": [
       "electron/**/*",
       "ui/**/*",
@@ -34,6 +39,8 @@
       ]
     },
     "win": {
+      "icon": "ui/assets/icons/icon.ico",
+      "executableName": "SOBT-Vault",
       "target": [
         {
           "target": "nsis",
@@ -42,17 +49,18 @@
             "x64"
           ]
         }
-      ],
-      "nsis": {
-        "oneClick": false,
-        "perMachine": false,
-        "allowToChangeInstallationDirectory": true
-      }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
     }
   },
   "dependencies": {
     "adm-zip": "^0.5.16",
     "chokidar": "^5.0.0",
+    "jszip": "^3.10.1",
     "xlsx": "^0.18.5"
   }
 }

@@ -1,5 +1,5 @@
 html, body {
-  overflow: hidden;
+  overflow: auto;
 }
 body {
   background: #0b0f14;
@@ -59,15 +59,15 @@ body {
 ================================ */
 .vault-toolbar {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 0.75rem 1.5rem;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  padding: 0.5rem 1rem;
   border-bottom: 1px solid #1f2937;
 }
 
 .toolbar-left {
-  flex: 1;
-  display: flex;
+  display: none;
 }
 
 .toolbar-actions {
@@ -94,11 +94,12 @@ body {
 .vault-layout {
   display: grid;
   grid-template-columns: 360px 1fr;
-  grid-template-rows: 1fr 220px;
+  grid-template-rows: 1fr auto;
   grid-template-areas:
     "cards runner"
     "details details";
   height: calc(100vh - 140px);
+  min-height: 0;
 }
 
 .vault-cards {
@@ -108,17 +109,82 @@ body {
   grid-area: cards;
 }
 
+/* ===============================
+   COLLAPSIBLE SIDEBAR
+================================ */
+
+.sidebar-wrapper {
+  position: relative;
+  display: flex;
+  height: 100%;
+}
+
+#sidebar {
+  width: 360px;
+  transition: width 0.2s ease;
+  display: block;
+  overflow-y: auto;
+  height: 100%;
+  padding: 1rem;
+  border-right: 1px solid #1f2937;
+  background: #0b0f14;
+}
+
+#sidebar.collapsed {
+  width: 48px;
+  overflow: hidden;
+}
+
+/* When collapsed, hide card content but keep a thin rail */
+#sidebar.collapsed .vault-card,
+#sidebar.collapsed .card-header,
+#sidebar.collapsed .card-desc,
+#sidebar.collapsed .card-actions {
+  display: none;
+}
+
+.sidebar-toggle {
+  position: absolute;
+  top: 10px;
+  right: -12px;
+  width: 24px;
+  height: 24px;
+  background: #1b252c;
+  border: 1px solid #4b5d68;
+  border-radius: 4px;
+  color: #9ec3d6;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.sidebar-toggle:hover {
+  background: #374151;
+}
+
+/* Adjust grid when collapsed */
+.vault-layout.collapsed {
+  grid-template-columns: 48px 1fr;
+}
+
 .vault-runner {
   background: #05080c;
   display: flex;
+  flex-direction: column;
   grid-area: runner;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .vault-frame {
   width: 100%;
   height: 100%;
+  flex: 1;
   border: none;
-  overflow: hidden;
+  overflow: auto; /* allow content scroll instead of hiding tabbar */
 }
 
 /* ===============================
@@ -148,14 +214,15 @@ body {
 .card-header {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 6px;
 }
 
 .card-icon {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   object-fit: contain;
+  flex-shrink: 0;
 }
 
 .card-title {
@@ -230,8 +297,60 @@ body {
   grid-area: details;
   border-top: 1px solid #1f2937;
   background: #0f172a;
+  display: block;
+  transition: max-height 0.2s ease;
+}
+
+/* Expanded state */
+.vault-details[open] {
   display: flex;
   flex-direction: column;
+  max-height: 260px;
+  overflow: hidden;
+}
+
+/* Collapsed state */
+.vault-details:not([open]) {
+  max-height: 36px;
+  overflow: hidden;
+}
+
+.vault-details summary {
+  padding: 10px 14px;
+  border-bottom: 1px solid #1f2937;
+  font-size: 12px;
+  color: #9ca3af;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  list-style: none;
+}
+
+.vault-details::after {
+  content: '';
+  height: 4px;
+  width: 100%;
+  display: block;
+  background: transparent;
+  cursor: row-resize;
+}
+
+.vault-details[open]::after {
+  background: linear-gradient(to right, transparent, #374151, transparent);
+}
+
+.vault-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.vault-details .collapse-indicator {
+  display: inline-block;
+  margin-right: 8px;
+  transition: transform 0.18s ease;
+}
+
+.vault-details:not([open]) .collapse-indicator {
+  transform: rotate(-90deg);
 }
 
 .details-header {
@@ -358,11 +477,13 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 10px;
-  min-height: 38px;
+  padding: 6px 8px;
+  min-height: 34px;
   background: #05080c;
-  border-top: 1px solid #1f2937;
+  border-bottom: 1px solid #1f2937;
   overflow-x: auto;
+  width: 100%;
+  flex: 0 0 auto;
 }
 
 .vault-tab {
@@ -384,4 +505,70 @@ body {
 
 .vault-tab span:last-child:hover {
   opacity: 1;
+}
+
+/* ===============================
+   MODERN OVERLAY SCROLLBARS
+================================ */
+
+/* Hide by default */
+*::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Show on hover */
+*:hover::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*:hover::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background-color: #2a3441;
+  border-radius: 4px;
+}
+
+*:hover::-webkit-scrollbar-thumb:hover {
+  background-color: #3b4a5a;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2a3441 transparent;
+}
+
+/* Smooth scroll feel */
+html {
+  scroll-behavior: smooth;
+}
+/* ===============================
+   FORCE HIDE ELECTRON SCROLLBARS
+================================ */
+
+/* Hide scrollbars on main containers */
+.vault-runner::-webkit-scrollbar,
+.vault-frame::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.vault-runner,
+.vault-frame,
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+/* Prevent horizontal scrollbar bleed */
+.vault-runner {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
 }

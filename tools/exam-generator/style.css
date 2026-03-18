@@ -529,3 +529,45 @@ textarea,
 pre {
     user-select: text;
 }
+/* ===============================
+   WEBSTORM-STYLE SCROLLBARS (VERTICAL)
+================================ */
+
+/* Prevent horizontal scroll bleed */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Thin overlay scrollbar */
+*::-webkit-scrollbar {
+  width: 8px; /* vertical */
+  height: 8px; /* horizontal (rarely used) */
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent; /* no track box */
+}
+
+/* Floating thumb (inset via border for WebStorm look) */
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(120, 140, 160, 0.28);
+  border-radius: 6px;
+  border: 2px solid transparent; /* creates inset/floating look */
+  background-clip: content-box;
+}
+
+/* Hover state (more visible like IDEs) */
+*:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(160, 180, 200, 0.55);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(120,140,160,0.28) transparent;
+}
+
+/* Keep logs readable with scroll */
+pre {
+  overflow-y: auto;
+}

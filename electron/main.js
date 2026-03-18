@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, dialog, globalShortcut } = require('electron');
 const path = require('path');
 
 const fs = require('fs');
@@ -38,9 +38,6 @@ function createMainWindow() {
   });
 
   mainWindow.loadFile(path.join(__dirname, '../ui/index.html'));
-
-  // Always open DevTools in development mode
-  mainWindow.webContents.openDevTools();
 
   // Show main window once ready and close splash
   mainWindow.once('ready-to-show', () => {
@@ -168,6 +165,14 @@ app.whenReady().then(async () => {
   createMainWindow();
   buildMenu();
 
+  // DevTools hotkey (Ctrl/Cmd + Shift + I)
+  globalShortcut.register('CommandOrControl+Shift+I', () => {
+    const win = BrowserWindow.getFocusedWindow();
+    if (win) {
+      win.webContents.toggleDevTools();
+    }
+  });
+
   const chokidar = (await import('chokidar')).default;
 
   // Hot reload watcher for tools during development
@@ -191,6 +196,10 @@ app.whenReady().then(async () => {
       createMainWindow();
     }
   });
+});
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
 });
 
 app.on('window-all-closed', () => {
