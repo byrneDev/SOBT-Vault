@@ -164,3 +164,45 @@ textarea { resize: vertical; }
 .panel > * {
   min-width: 0;
 }
+
+/* ===============================
+   HARD CONTAINMENT (CRITICAL FIX)
+================================ */
+
+html, body {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+}
+
+/* Kill any viewport-based layouts */
+[style*="100vw"],
+[style*="width:100vw"],
+[style*="width: 100vw"] {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Ensure all top-level containers stay inside iframe bounds */
+body > *,
+.container,
+.panel,
+.header,
+.brand,
+.workspace,
+.canvas-panel,
+.main,
+.main-content {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+}
+
+/* Prevent hidden horizontal offset */
+* {
+  max-width: 100% !important;
+}

@@ -5,29 +5,20 @@
     <title>SOBT Exam Generator</title>
     <link rel="stylesheet" href="../_shared/ui.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .container {
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
 
-<header>
+<div class="tool-actions" style="display:flex; justify-content:flex-end; gap:10px; margin:16px 0;">
 
-    <div class="header-row">
-        <div class="brand">
-            <img src="logo.png" alt="SOBT Developer Tool Logo" class="brand-logo">
-
-            <div class="brand-text">
-                <h1>SOBT Exam Generator</h1>
-                <p class="subtitle">Generate SOBT-Compliant Exam Banks</p>
-            </div>
-        </div>
-        <div class="header-actions" style="margin-left:auto;">
-            <button id="aboutBtn" class="secondary-btn">About</button>
-        </div>
-    </div>
-
-
-</header>
+    <button id="aboutBtn" class="secondary-btn">About</button>
+</div>
 
 <section class="panel action-panel">
 
@@ -47,13 +38,11 @@
         <input type="file" id="importExcelFile" accept=".xlsx,.xls" style="display:none">
     </div>
 
-    <button id="generateBankBtn" class="primary-btn">Generate Exam Bank</button>
+    <button id="generateBankBtn" class="primary-btn full-width">Generate Exam Bank</button>
 
 </div>
 
 </section>
-
-</header>
 
 
 
@@ -66,24 +55,24 @@
 
 <div class="form-grid">
 
-  <div class="form-row">
-    <label>TOS (Terminal Objective)</label>
-    <input type="text" id="tos" class="form-input" placeholder="Terminal Objective Group">
+  <div class="form-group">
+    <label class="label">TOS (Terminal Objective)</label>
+    <input type="text" id="tos" class="input" placeholder="Terminal Objective Group">
   </div>
 
-  <div class="form-row">
-    <label>EOS (Enabling Objective)</label>
-    <input type="text" id="eos" class="form-input" placeholder="TO1: Enabling Objective Group">
+  <div class="form-group">
+    <label class="label">EOS (Enabling Objective)</label>
+    <input type="text" id="eos" class="input" placeholder="TO1: Enabling Objective Group">
   </div>
 
-  <div class="form-row">
-    <label>Question ID</label>
-    <input type="text" id="questionID" class="form-input">
+  <div class="form-group">
+    <label class="label">Question ID</label>
+    <input type="text" id="questionID" class="input">
   </div>
 
-  <div class="form-row">
-    <label>Question Type</label>
-    <select id="questionType" class="form-input">
+  <div class="form-group">
+    <label class="label">Question Type</label>
+    <select id="questionType" class="input">
       <option value="MC">Multiple Choice</option>
       <option value="MA">Multiple Answer</option>
     </select>
@@ -91,47 +80,47 @@
 
 </div>
 
-<div class="form-row">
-<label>Question</label>
-<textarea id="questionText" class="form-input"></textarea>
+<div class="form-group">
+<label class="label">Question</label>
+<textarea id="questionText" class="input"></textarea>
 </div>
 
 <div class="choices-grid">
 
-  <div class="form-row">
-    <label>Choice A</label>
-    <input type="text" id="choiceA" class="form-input">
+  <div class="form-group">
+    <label class="label">Choice A</label>
+    <input type="text" id="choiceA" class="input">
   </div>
 
-  <div class="form-row">
-    <label>Choice B</label>
-    <input type="text" id="choiceB" class="form-input">
+  <div class="form-group">
+    <label class="label">Choice B</label>
+    <input type="text" id="choiceB" class="input">
   </div>
 
-  <div class="form-row">
-    <label>Choice C</label>
-    <input type="text" id="choiceC" class="form-input">
+  <div class="form-group">
+    <label class="label">Choice C</label>
+    <input type="text" id="choiceC" class="input">
   </div>
 
-  <div class="form-row">
-    <label>Choice D</label>
-    <input type="text" id="choiceD" class="form-input">
+  <div class="form-group">
+    <label class="label">Choice D</label>
+    <input type="text" id="choiceD" class="input">
   </div>
 
 </div>
 
-<div class="form-row">
-<label>Correct Answer</label>
-<input type="text" id="correctAnswer" placeholder="A or A,B" class="form-input">
+<div class="form-group">
+<label class="label">Correct Answer</label>
+<input type="text" id="correctAnswer" placeholder="A or A,B" class="input">
 </div>
 
-<div class="form-row">
-<label>Remediation</label>
-<textarea id="remediation" class="form-input"></textarea>
+<div class="form-group">
+<label class="label">Remediation</label>
+<textarea id="remediation" class="input"></textarea>
 </div>
 
 <div class="action-row">
-  <button id="addQuestionBtn" class="primary-btn">Add Question</button>
+  <button id="addQuestionBtn" class="primary-btn full-width">Add Question</button>
 </div>
 
 </section>
@@ -190,7 +179,7 @@ Questions: 0
 
 <h3>Export</h3>
 
-<button id="exportExamBtn" class="primary-btn">
+<button id="exportExamBtn" class="primary-btn full-width">
 Export SOBT Exam Bank
 </button>
 

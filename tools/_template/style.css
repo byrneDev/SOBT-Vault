@@ -16,24 +16,10 @@ body {
 
 .container {
     width: 100%;
-    margin: 40px 0;
+    margin: 0;
     padding: 20px;
 }
 
-header {
-    margin-bottom: 30px;
-}
-
-h1 {
-    margin: 0;
-    font-size: 28px;
-}
-
-.subtitle {
-    margin-top: 6px;
-    color: #8b949e;
-    font-size: 14px;
-}
 
 /* ===============================
    PANELS
@@ -44,7 +30,7 @@ h1 {
     border: 1px solid #30363d;
     border-radius: 8px;
     padding: 24px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .status-panel h3 {
@@ -231,16 +217,6 @@ pre {
     color: #c9d1d9;
 }
 
-.header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-}
-
-.header-row .secondary-btn {
-    margin-top: 0;
-}
 
 .app-footer {
     margin-top: 18px;
@@ -261,35 +237,17 @@ pre {
     color: #8b949e;
 }
 
+
 /* ===============================
-   BRAND + LOGO
+   TOOL ACTIONS
 ================================ */
 
-.brand {
+.tool-actions {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
-    gap: 16px;
-}
-
-.brand-logo {
-    width: 64px;
-    height: 64px;
-    object-fit: contain;
-    border-radius: 6px;
-    box-shadow: 0 0 12px rgba(242, 201, 76, 0.35);
-}
-
-.brand-text h1 {
-    margin: 0;
-}
-
-.brand-text .subtitle {
-    margin-top: 4px;
-}
-
-.header-actions {
-    display: flex;
-    gap: 12px;
+    gap: 10px;
+    margin: 0 0 16px 0;
 }
 
 /* Allow selection only in inputs and logs */

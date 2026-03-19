@@ -91,12 +91,147 @@ let activeSlide = null
 // --- Local Persistence ---
 const STORAGE_KEY = "sobt_storyboard_data"
 
+const PROJECT_META = {
+    name: "Storyboard Project",
+    created: new Date().toISOString()
+}
+
+// --- Workspace ZIP Support ---
+let workspaceAssets = {}
+// --- Workspace ZIP Export ---
+async function exportWorkspaceZip(){
+    try{
+        const zip = new JSZip()
+
+        const snapshot = getWorkspaceSnapshot()
+
+        // main project file
+        zip.file("project.json", JSON.stringify(snapshot, null, 2))
+
+        // assets folder (images from elements)
+        const assetsFolder = zip.folder("assets")
+
+        slides.forEach(slide => {
+            slide.elements.forEach((el, idx) => {
+                if(el.type === "image" && el.src && el.src.startsWith("data:")){
+                    const base64 = el.src.split(',')[1]
+                    const fileName = `img_${slide.id}_${idx}.png`
+
+                    assetsFolder.file(fileName, base64, { base64: true })
+
+                    // replace src for portability
+                    el._assetRef = fileName
+                }
+            })
+        })
+
+        const blob = await zip.generateAsync({ type: "blob" })
+
+        const a = document.createElement("a")
+        a.href = URL.createObjectURL(blob)
+        a.download = "workspace.zip"
+        a.click()
+
+        log("Workspace exported (ZIP)")
+    }catch(e){
+        console.error("Workspace ZIP export failed", e)
+    }
+}
+
+// --- Workspace ZIP Import ---
+async function importWorkspaceZip(file){
+    try{
+        const zip = await JSZip.loadAsync(file)
+
+        const projectFile = zip.file("project.json")
+        if(!projectFile){
+            log("Invalid workspace ZIP")
+            return
+        }
+
+        const content = await projectFile.async("string")
+        const data = JSON.parse(content)
+
+        slides = data.slides || []
+        activeSlide = slides.find(s => s.id === data.activeSlideId) || slides[0] || null
+
+        // restore images
+        const assetsFolder = zip.folder("assets")
+        if(assetsFolder){
+            const files = Object.keys(assetsFolder.files)
+
+            for(const path of files){
+                const fileObj = assetsFolder.files[path]
+                if(!fileObj.dir){
+                    const base64 = await fileObj.async("base64")
+                    const dataUrl = `data:image/png;base64,${base64}`
+
+                    slides.forEach(slide => {
+                        slide.elements.forEach(el => {
+                            if(el._assetRef === fileObj.name){
+                                el.src = dataUrl
+                            }
+                        })
+                    })
+                }
+            }
+        }
+
+        renderSlides()
+        renderCanvas()
+
+        log("Workspace loaded (ZIP)")
+    }catch(e){
+        console.error("Workspace ZIP load failed", e)
+    }
+}
+
 function saveProject(){
     try{
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ slides, activeSlideId: activeSlide?.id || null }))
+        const data = {
+            version: "1.0",
+            slides,
+            activeSlideId: activeSlide?.id || null,
+            assets: {} // future-proof for ZIP system
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
     }catch(e){
         console.error("Save failed", e)
     }
+}
+
+// --- Debounced Save System ---
+let saveTimeout = null;
+function scheduleSave(){
+    if(saveTimeout) clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(()=>{
+        saveProject();
+        updateSaveIndicator("Saved");
+    }, 500);
+}
+
+function updateSaveIndicator(text){
+    let el = document.getElementById('saveIndicator');
+    if(!el){
+        el = document.createElement('div');
+        el.id = 'saveIndicator';
+        el.style.position = 'fixed';
+        el.style.bottom = '10px';
+        el.style.right = '10px';
+        el.style.fontSize = '12px';
+        el.style.color = '#9ca3af';
+        document.body.appendChild(el);
+    }
+    el.textContent = text;
+}
+
+function resetWorkspace(){
+    localStorage.removeItem(STORAGE_KEY);
+    slides = [];
+    activeSlide = null;
+    renderSlides();
+    renderCanvas();
+    log("Workspace reset");
 }
 
 function loadProject(){
@@ -105,8 +240,14 @@ function loadProject(){
         if(!raw) return false
 
         const data = JSON.parse(raw)
+
         slides = Array.isArray(data.slides) ? data.slides : []
         activeSlide = slides.find(s => s.id === data.activeSlideId) || slides[0] || null
+
+        // future: assets support
+        if(data.assets){
+            // placeholder (no-op for now)
+        }
 
         renderSlides()
         renderCanvas()
@@ -114,6 +255,15 @@ function loadProject(){
     }catch(e){
         console.error("Load failed", e)
         return false
+    }
+}
+
+function getWorkspaceSnapshot(){
+    return {
+        version: "1.0",
+        meta: PROJECT_META,
+        slides,
+        activeSlideId: activeSlide?.id || null
     }
 }
 
@@ -419,7 +569,7 @@ function renderSlides()
         slidesList.appendChild(div)
 
     })
-    saveProject()
+    scheduleSave()
 }
 
 
@@ -729,7 +879,7 @@ function renderCanvas()
     }
 
     activeSlide.elements.forEach(el => renderElement(el))
-    saveProject()
+    scheduleSave()
 }
 
 canvas.onclick = () => {
@@ -811,6 +961,11 @@ canvas.addEventListener("mousedown", (e)=>{
 
 
 document.addEventListener("keydown", (e) => {
+    // Reset workspace (Ctrl+Shift+R)
+    if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "r"){
+        e.preventDefault();
+        resetWorkspace();
+    }
 
     // Undo / Redo shortcuts
     if(e.ctrlKey && e.key.toLowerCase() === "z" && !e.shiftKey){
@@ -1494,18 +1649,18 @@ const saveProjectBtn = document.getElementById('saveProjectBtn')
 const loadProjectBtn = document.getElementById('loadProjectBtn')
 
 if(saveProjectBtn){
-    saveProjectBtn.onclick = exportProject
+    saveProjectBtn.onclick = exportWorkspaceZip
 }
 
 if(loadProjectBtn){
     loadProjectBtn.onclick = () => {
         const input = document.createElement("input")
         input.type = "file"
-        input.accept = "application/json"
+        input.accept = ".zip"
 
         input.onchange = ()=>{
             if(input.files[0]){
-                importProject(input.files[0])
+                importWorkspaceZip(input.files[0])
             }
         }
 

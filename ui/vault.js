@@ -223,11 +223,79 @@ function getOrCreateToolFrame(app) {
   frame.style.height = '100%'
   frame.style.border = 'none'
   frame.style.background = 'transparent'
+  frame.style.margin = '0';
+  frame.style.padding = '0';
+  frame.style.boxSizing = 'border-box';
+  frame.style.display = 'block';
 
   host.appendChild(frame)
   createTab(app)
   toolFrames[app.name] = frame
   workspaceManager.save()
+
+  // Inject CSS into iframe to override 100vw / overflow issues
+  frame.addEventListener('load', () => {
+    try {
+      const doc = frame.contentDocument || frame.contentWindow.document;
+      if (!doc) return;
+
+      const style = doc.createElement('style');
+      style.textContent = `
+        html, body {
+          width: 100% !important;
+          min-width: 0 !important;
+          max-width: 100% !important;
+          overflow-x: hidden !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          left: 0 !important;
+          right: auto !important;
+        }
+
+        body {
+          position: relative !important;
+        }
+
+        /* Normalize common top-level tool containers */
+        body > *,
+        main,
+        .container,
+        .workspace,
+        .canvas-panel,
+        .panel,
+        .header-row,
+        .brand,
+        .app-shell,
+        .main-content {
+          width: 100% !important;
+          max-width: 100% !important;
+          min-width: 0 !important;
+          margin-left: 0 !important;
+          margin-right: 0 !important;
+          left: auto !important;
+          right: auto !important;
+          transform: none !important;
+          box-sizing: border-box !important;
+        }
+
+        /* Kill viewport-width layouts that underlap the sidebar */
+        [style*="100vw"],
+        [style*="width: 100vw"],
+        [style*="width:100vw"] {
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+
+        * {
+          box-sizing: border-box !important;
+        }
+      `;
+
+      doc.head.appendChild(style);
+    } catch (err) {
+      console.warn('iframe style injection failed', err);
+    }
+  });
 
   return frame
 }
@@ -605,31 +673,35 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Sidebar collapse toggle
-  const sidebar = document.getElementById('sidebar');
+  const sidebarWrapper = document.querySelector('.sidebar-wrapper');
+  const sidebarContent = document.getElementById('sidebar');
   const sidebarToggle = document.getElementById('sidebarToggle');
   const layout = document.querySelector('.vault-layout');
 
   // Force sidebar visible on initial load (fix blank screen issue)
-  if (sidebar) {
-    sidebar.classList.remove('collapsed');
-    sidebar.style.display = 'block';
-    sidebar.style.width = '360px';
+  if (sidebarContent) {
+    sidebarContent.classList.remove('collapsed');
+    // removed: sidebar.style.display = 'block';
+    // removed: sidebar.style.width = '360px';
   }
 
   if (layout) {
-    layout.classList.remove('collapsed');
+    layout.classList.remove('sidebar-collapsed');
   }
 
-  if (sidebar && sidebarToggle) {
+  if (sidebarWrapper && sidebarContent && sidebarToggle) {
     sidebarToggle.addEventListener('click', () => {
-      sidebar.classList.toggle('collapsed');
+      sidebarContent.classList.toggle('collapsed');
+
+      // Do NOT hide sidebar with display:none (keeps toggle accessible)
+      // Sidebar visibility is handled by CSS width collapse
 
       if (layout) {
-        layout.classList.toggle('collapsed');
+        layout.classList.toggle('sidebar-collapsed');
       }
 
       // update arrow direction
-      const isCollapsed = sidebar.classList.contains('collapsed');
+      const isCollapsed = sidebarContent.classList.contains('collapsed');
       sidebarToggle.textContent = isCollapsed ? '▶' : '◀';
     });
   }

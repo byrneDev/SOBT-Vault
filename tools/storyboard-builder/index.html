@@ -10,43 +10,28 @@
 
 <div class="container">
 
-    <header>
+<div class="tool-actions">
 
-        <div class="header-row">
+    <button id="addSlideBtn" class="secondary-btn">Add Slide</button>
+    <button id="duplicateSlideBtn" class="secondary-btn">Duplicate Slide</button>
+    <button id="deleteSlideBtn" class="secondary-btn">Delete Slide</button>
 
-            <div class="brand">
-                <img src="logo.png" class="brand-logo">
+    <button id="exportBtn" class="primary-btn">Export to SCO</button>
 
-                <div class="brand-text">
-                    <h1>SOBT Storyboard Builder</h1>
-                    <p class="subtitle">Storyboard slides for customer review</p>
-                </div>
-            </div>
+    <button id="saveProjectBtn" class="secondary-btn">Save Project</button>
+    <button id="loadProjectBtn" class="secondary-btn">Load Project</button>
 
-            <div class="header-actions">
-                <button id="addSlideBtn" class="secondary-btn">Add Slide</button>
-                <button id="duplicateSlideBtn" class="secondary-btn">Duplicate Slide</button>
-                <button id="deleteSlideBtn" class="secondary-btn">Delete Slide</button>
-                <button id="exportBtn" class="primary-btn">Export to SCO</button>
-                <button id="saveProjectBtn" class="secondary-btn">Save Project</button>
-                <button id="loadProjectBtn" class="secondary-btn">Load Project</button>
+    <button id="gridToggleBtn" class="secondary-btn">Grid</button>
 
-                <button id="gridToggleBtn" class="secondary-btn">Grid</button>
+    <div class="zoom-controls">
+        <button id="zoomOutBtn" class="secondary-btn">−</button>
+        <span id="zoomDisplay">100%</span>
+        <button id="zoomInBtn" class="secondary-btn">+</button>
+    </div>
 
-                <div class="zoom-controls">
-                    <button id="zoomOutBtn" class="secondary-btn">−</button>
-                    <span id="zoomDisplay">100%</span>
-                    <button id="zoomInBtn" class="secondary-btn">+</button>
-                </div>
+    <button id="aboutBtn" class="secondary-btn">About</button>
 
-
-                <button id="aboutBtn" class="secondary-btn">About</button>
-            </div>
-
-        </div>
-
-    </header>
-
+</div>
 
     <section class="panel">
 
@@ -256,7 +241,7 @@
 
 </div>
 
-<script src="node_modules/jszip/dist/jszip.min.js"></script>
+<script src="jszip.min.js"></script>
 <script src="app.js"></script>
 
 </body>

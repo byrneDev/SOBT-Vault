@@ -1,11 +1,14 @@
 html, body {
-  overflow: auto;
+  overflow: hidden;
 }
 body {
   background: #0b0f14;
   color: #e5e7eb;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, sans-serif;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 /* ===============================
@@ -18,6 +21,9 @@ body {
   gap: 1rem;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #1f2937;
+
+  /* FIX ALIGNMENT */
+  grid-column: 1 / -1;
 }
 
 .brand {
@@ -66,6 +72,11 @@ body {
   border-bottom: 1px solid #1f2937;
 }
 
+.vault-header,
+.vault-toolbar {
+  flex: 0 0 auto;
+}
+
 .toolbar-left {
   display: none;
 }
@@ -98,15 +109,15 @@ body {
   grid-template-areas:
     "cards runner"
     "details details";
-  height: calc(100vh - 140px);
+  flex: 1;
   min-height: 0;
+  overflow: hidden; /* prevents layout bleed */
 }
 
 .vault-cards {
   border-right: 1px solid #1f2937;
   padding: 1rem;
   overflow-y: auto;
-  grid-area: cards;
 }
 
 /* ===============================
@@ -117,21 +128,23 @@ body {
   position: relative;
   display: flex;
   height: 100%;
+  width: 100%;
+  grid-area: cards;
 }
 
 #sidebar {
-  width: 360px;
+  width: 100%;
   transition: width 0.2s ease;
   display: block;
   overflow-y: auto;
   height: 100%;
-  padding: 1rem;
+  padding: 0;
   border-right: 1px solid #1f2937;
   background: #0b0f14;
 }
 
 #sidebar.collapsed {
-  width: 48px;
+  width: 100%;
   overflow: hidden;
 }
 
@@ -166,17 +179,19 @@ body {
 }
 
 /* Adjust grid when collapsed */
-.vault-layout.collapsed {
+.vault-layout.sidebar-collapsed {
   grid-template-columns: 48px 1fr;
 }
 
 .vault-runner {
+  grid-area: runner;
   background: #05080c;
   display: flex;
   flex-direction: column;
-  grid-area: runner;
-  overflow: hidden;
   min-height: 0;
+  overflow: hidden; /* important */
+  flex: 1;
+  padding: 1rem;
 }
 
 .vault-frame {
@@ -184,7 +199,9 @@ body {
   height: 100%;
   flex: 1;
   border: none;
-  overflow: auto; /* allow content scroll instead of hiding tabbar */
+  overflow: auto;
+  margin: 0;
+  padding: 0;
 }
 
 /* ===============================
@@ -295,23 +312,23 @@ body {
 ================================ */
 .vault-details {
   grid-area: details;
+  position: relative; /* remove sticky */
   border-top: 1px solid #1f2937;
   background: #0f172a;
   display: block;
-  transition: max-height 0.2s ease;
 }
 
-/* Expanded state */
+/* Expanded */
 .vault-details[open] {
   display: flex;
   flex-direction: column;
-  max-height: 260px;
+  height: 220px; /* fixed height like IDE */
   overflow: hidden;
 }
 
-/* Collapsed state */
+/* Collapsed */
 .vault-details:not([open]) {
-  max-height: 36px;
+  height: 36px;
   overflow: hidden;
 }
 
